@@ -1,9 +1,25 @@
 const videoModel=require('../../model/videoCourse')
-let courseDetail=async(req,res)=>{
+let productModel=require('../../model/product')
+const { success, error } = require("../../responseApi/responseApi");
+let courseDetailAfterBuy=async(req,res)=>{
 
-    let a=await videoModel.find({category:req.body.categoryId})
-    res.send(a)
+    let videoData=await videoModel.find({category:req.query.categoryId})
+    if(videoData){    
+        success(res, "Successfuly", 200,videoData);
+      } else {
+        error(res, "Wrong Password", 400);
+      }
+}
+let courseDetailBeforeBuy=async(req,res)=>{
+    let productDetail = await productModel.findOne({_id:req.query.Id})
+    console.log(productDetail,".....")
+    if(productDetail){    
+    success(res, "Successfuly", 200,productDetail);
+  } else {
+    error(res, "failed", 400);
+  }
 }
 module.exports={
-    courseDetail
+    courseDetailAfterBuy,
+    courseDetailBeforeBuy
 }
