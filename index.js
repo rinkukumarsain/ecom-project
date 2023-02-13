@@ -1,7 +1,7 @@
 require("dotenv").config();
 let express = require("express");
 let app = express();
-let port = process.env.PORT || 8800;
+let port = process.env.PORT;
 const cors = require("cors");
 let mongoose = require("mongoose");
 mongoose.set("strictQuery", true);
@@ -15,6 +15,7 @@ const forgotPassRoute = require("../Api/src/forgotPassword/forgotPassRoute/forgo
 const mostPopularCoursesRoute = require("../Api/src/mostPopularCourses/mostPopularCoursesRoute/mostPopularCoursesRoute");
 const learningAtFingertipsRoute = require("../Api/src/learningAtFingertips/learningAtFingertipsRoute/learningAtFingertipsRoute");
 const addTocartRoute = require("../Api/src/addToCart/addToCartRoute/addToCartRoute");
+const courseDetailRoute=require('../Api/src/courseDetail/courseDetailRoute/courseDetailRoute')
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -26,6 +27,7 @@ app.use(mostPopularCoursesRoute);
 app.use(productRoute);
 app.use(addTocartRoute);
 app.use(learningAtFingertipsRoute);
+app.use(courseDetailRoute)
 
 app.listen(port, (err) => {
   if (!err) {
