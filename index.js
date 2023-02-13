@@ -5,7 +5,7 @@ let port = process.env.PORT;
 const cors = require("cors");
 let mongoose = require("mongoose");
 mongoose.set("strictQuery", true);
-let connection = require("../Api/src/dbConnection/conn");
+let connection = require("./src/dbConnection/conn");
 
 let registerRoute = require("../Api/src/register/registerRoute/regRout");
 let loginRoute = require("../Api/src/login/loginRoute/loginRoute");
