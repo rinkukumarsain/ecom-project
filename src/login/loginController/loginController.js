@@ -13,7 +13,7 @@ let login = async (req, res) => {
           expires: new Date(Date.now() + 50000),
           httpOnly: true,
         });
-        let response = { email: find.email, token: token };
+        let response = { email: find.email, token: token,userId:find._id };
         success(res, "Login Successfuly", 200,response);
       } else {
         error(res, "Wrong Password", 400);
