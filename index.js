@@ -7,7 +7,7 @@ let mongoose = require("mongoose");
 mongoose.set("strictQuery", true);
 let connection = require("./src/dbConnection/conn");
 let path=require('path')
-let publicpath=path.join(__dirname,"/public")
+let publicpath=path.join(__dirname,"./public")
 console.log(publicpath,".....sad")
 app.use(express.static(publicpath))
 let registerRoute = require("./src/register/registerRoute/regRout");
