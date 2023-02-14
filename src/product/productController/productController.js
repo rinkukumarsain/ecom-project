@@ -1,40 +1,9 @@
-const mostPopularCourses = require('../../model/mostPopularCourses');
-const { Aggregate } = require("mongoose");
 const { success, error } = require("../../responseApi/responseApi");
+const productmodel = require('../../model/product');
 let ourTrendingCourses=async(req,res)=>{
-
-  let pipe=[
-    {
-      '$lookup': {
-        'from': 'products', 
-        'let': {
-          'id': '$_id'
-        }, 
-        'pipeline': [
-          {
-            '$match': {
-              '$expr': {
-                '$and': [
-                  {
-                    '$eq': [
-                      '$category', '$$id'
-                    ]
-                  }, {
-                    '$eq': [
-                      '$trending', 1
-                    ]
-                  }
-                ]
-              }
-            }
-          }
-        ], 
-        'as': 'subcategory'
-      }
-    }
-  ]
-
-  const aggCursor = await mostPopularCourses.aggregate(pipe);
+console.log("agg")
+  let  aggCursor = await productmodel.find({trending:1});
+  console.log(aggCursor)
   if(aggCursor)
   {
     success(res, " Success", 200,aggCursor);
