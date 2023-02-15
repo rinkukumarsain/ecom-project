@@ -35,40 +35,47 @@ let forgotPassword = async (req, res) => {
 };
 
 let setNewPassword = async (req, res) => {
-  let bodyOtp = req.body.otp;
-  let bodyEmail = req.body.email;
-  let newPassword = req.body.newPassword;
-  let newConfirmPassword = req.body.newConfirmPassword;
-  let getEmailData = await registerModel.findOne({ email: bodyEmail });
-
-  if (getEmailData) {
-    if (
-      getEmailData.otp === bodyOtp &&
-      getEmailData.otpExpireTime > Date.now()
-    ) {
-      if (newPassword === newConfirmPassword) {
-        newPassword = await bcrypt.hash(newPassword, 10);
-        newConfirmPassword = await bcrypt.hash(newConfirmPassword, 10);
-
-        let updatePassword = await registerModel.findByIdAndUpdate(
-          { _id: getEmailData._id },
-          {
-            password: newPassword,
-            confirmpassword: newConfirmPassword,
-            otp: "",
-          },
-          { new: true }
-        );
-
-        success(res, "Password Changed Successfully", 200);
+  try{
+    let bodyOtp = req.body.otp;
+    let bodyEmail = req.body.email;
+    let newPassword = req.body.newPassword;
+    let newConfirmPassword = req.body.newConfirmPassword;
+    let getEmailData = await registerModel.findOne({ email: bodyEmail });
+  
+    if (getEmailData) {
+      if (
+        getEmailData.otp === bodyOtp &&
+        getEmailData.otpExpireTime > Date.now()
+      ) {
+        if (newPassword === newConfirmPassword) {
+          newPassword = await bcrypt.hash(newPassword, 10);
+          newConfirmPassword = await bcrypt.hash(newConfirmPassword, 10);
+  
+          console.log(newPassword)
+          console.log(newConfirmPassword,"cccccccccccccccc")
+          let updatePassword = await registerModel.findByIdAndUpdate(
+            { _id: getEmailData._id },
+            {
+              password: newPassword,
+              confirmpassword: newConfirmPassword,
+              otp: "",
+            },
+            { new: true }
+          );
+  
+          success(res, "Password Changed Successfully", 200);
+        } else {
+          error(res, "Password and Confirm Password are not matched", 400);
+        }
       } else {
-        error(res, "Password and Confirm Password are not matched", 400);
+        error(res, "Wrong OTP", 400);
       }
     } else {
-      error(res, "Wrong OTP", 400);
+      error(res, "User Not Found", 400);
     }
-  } else {
-    error(res, "User Not Found", 400);
+  }catch(e){
+console.log(e)
   }
+
 };
 module.exports = { forgotPassword, setNewPassword };
