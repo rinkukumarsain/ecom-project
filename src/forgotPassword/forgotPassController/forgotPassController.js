@@ -48,7 +48,7 @@ let setNewPassword = async (req, res) => {
     ) {
       if (newPassword === newConfirmPassword) {
         newPassword = await bcrypt.hash(newPassword, 10);
-        newConfirmPassword = await bcrypt.hash(newPassword, 10);
+        newConfirmPassword = await bcrypt.hash(newConfirmPassword, 10);
 
         let updatePassword = await registerModel.findByIdAndUpdate(
           { _id: getEmailData._id },
