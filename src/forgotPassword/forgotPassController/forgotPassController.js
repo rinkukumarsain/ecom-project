@@ -38,10 +38,11 @@ let setNewPassword = async (req, res) => {
   try{
     let bodyOtp = req.body.otp;
     let bodyEmail = req.body.email;
-    let newPassword = req.body.newPassword;
-    let newConfirmPassword = req.body.newConfirmPassword;
+    let newPassword = req.body.newPassword.toString();
+    let newConfirmPassword = req.body.newConfirmPassword.toString();
     let getEmailData = await registerModel.findOne({ email: bodyEmail });
   
+    console.log(newPassword,typeof(newPassword))
     if (getEmailData) {
       if (
         getEmailData.otp === bodyOtp &&
