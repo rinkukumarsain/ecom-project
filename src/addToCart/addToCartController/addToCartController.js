@@ -5,7 +5,7 @@ const { success, error } = require("../../responseApi/responseApi");
 let addToCart = async (req, res) => {
   let findData = await productModel.findOne({ _id: req.body.itemId });
   let check = await cartModel.findOne({
-    userId: req.body.userId,
+    userId: req.user._id,
     itemId: req.body.itemId,
   });
   if (!check) {
@@ -13,7 +13,7 @@ let addToCart = async (req, res) => {
       itemId: req.body.itemId,
       price: findData.price,
       quantity: 1,
-      userId: req.body.userId,
+      userId:req.user._id,
     });
     cartSave = await cartData.save();
     if (cartSave) {
@@ -27,10 +27,11 @@ let addToCart = async (req, res) => {
 };
 
 let cartItem = async (req, res) => {
+  console.log(req.user._id,"userrrrrr")
   let pipe = [
     {
       $match: {
-        userId: mongoose.Types.ObjectId(`${req.query.userId}`),
+        userId: mongoose.Types.ObjectId(`${req.user._id}`),
       },
     },
     {
@@ -85,13 +86,16 @@ let cartItem = async (req, res) => {
 };
 
 let removeItemFromCart = async (req, res) => {
-  let find = await cartModel.findOne({itemId: req.body.itemId,userId: req.body.userId});
+  let find = await cartModel.findOne({itemId: req.body.itemId,userId:req.user._id});
+  console.log(req.user._id,".....")
+  console.log(find)
+
   console.log(find)
   let removeItem = await cartModel.findByIdAndDelete({ _id: find._id });
   let pipe = [
     {
       $match: {
-        userId: mongoose.Types.ObjectId(`${req.body.userId}`),
+        userId: mongoose.Types.ObjectId(`${req.user._id}`),
       },
     },
     {
@@ -148,9 +152,10 @@ let removeItemFromCart = async (req, res) => {
 let updateItemFromCart = async (req, res) => {
   let find = await cartModel.findOne({
     itemId: req.body.itemId,
-    userId: req.body.userId,
+    userId: req.user._id,
   });
 
+  console.log(find,"..dsnj")
   let updateItem = await cartModel.findByIdAndUpdate(
     { _id: find._id },
     { quantity: req.body.quantity },
@@ -159,7 +164,7 @@ let updateItemFromCart = async (req, res) => {
   let pipe = [
     {
       $match: {
-        userId: mongoose.Types.ObjectId(`${req.body.userId}`),
+        userId: mongoose.Types.ObjectId(`${req.user._id}`),
       },
     },
     {
