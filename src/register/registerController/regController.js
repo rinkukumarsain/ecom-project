@@ -5,9 +5,10 @@ let register=async(req,res)=>{
 try{
    
 
-    let password=req.body.password
-    let confirmpassword=req.body.confirmpassword
+    let password=req.body.password.toString()
+    let confirmpassword=req.body.confirmpassword.toString()
 
+    
     let find=await registerModel.findOne({email:req.body.email})
     if(!find){
         if(password===confirmpassword)
