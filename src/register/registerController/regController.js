@@ -33,9 +33,8 @@ try{
    
 }catch(e){
 
-    console.log(e)
-}
-    
+    error(res,e,400)
+} 
    
 }
 

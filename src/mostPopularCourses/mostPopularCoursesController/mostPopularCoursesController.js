@@ -41,45 +41,51 @@ let mongoose = require("mongoose");
 // };
 
 let mostPopularCourses=async(req,res)=>{
-  let pipe=[
-    {
-      '$lookup': {
-        'from': 'products', 
-        'let': {
-          'id': '$_id'
-        }, 
-        'pipeline': [
-          {
-            '$match': {
-              '$expr': {
-                '$and': [
-                  {
-                    '$eq': [
-                      '$category', '$$id'
-                    ]
-                  }, {
-                    '$eq': [
-                      '$popular', 1
-                    ]
-                  }
-                ]
+
+  try{
+    let pipe=[
+      {
+        '$lookup': {
+          'from': 'products', 
+          'let': {
+            'id': '$_id'
+          }, 
+          'pipeline': [
+            {
+              '$match': {
+                '$expr': {
+                  '$and': [
+                    {
+                      '$eq': [
+                        '$category', '$$id'
+                      ]
+                    }, {
+                      '$eq': [
+                        '$popular', 1
+                      ]
+                    }
+                  ]
+                }
               }
             }
-          }
-        ], 
-        'as': 'subcategory'
+          ], 
+          'as': 'subcategory'
+        }
       }
+    ]
+  
+    const aggCursor = await categoryModel.aggregate(pipe);
+    if(aggCursor)
+    {
+      success(res, " Success", 200,aggCursor);
     }
-  ]
+    else{
+      error(res, "Failed", 400);
+    }
+  }catch(err){
+    error(res,err,400)
+  }
 
-  const aggCursor = await categoryModel.aggregate(pipe);
-  if(aggCursor)
-  {
-    success(res, " Success", 200,aggCursor);
-  }
-  else{
-    error(res, "Failed", 400);
-  }
 }
 module.exports = {
   mostPopularCourses,

@@ -8,9 +8,7 @@ let addressSchema = mongoose.Schema({
   },
   phone: {
     type: Number,
-
     required: true,
-
     validate: {
       validator: function (v) {
         return /^[0-9]{10}$/.test(v);

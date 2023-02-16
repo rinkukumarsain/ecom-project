@@ -30,7 +30,7 @@ let forgotPassword = async (req, res) => {
       error(res, "User Not Found", 400);
     }
   } catch (e) {
-    console.log(e);
+    error(res,e,400)
   }
 };
 
@@ -75,7 +75,7 @@ let setNewPassword = async (req, res) => {
       error(res, "User Not Found", 400);
     }
   }catch(e){
-console.log(e)
+    error(res,e,400)
   }
 
 };
