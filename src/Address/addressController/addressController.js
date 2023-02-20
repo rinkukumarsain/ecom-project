@@ -9,12 +9,10 @@ let address = async (req, res) => {
     ) {
       let checkAddress = await addressModel.findOne({ userId: req.user._id });
       req.body.email = req.user.email;
+      req.body.userId = req.user._id;
+
       console.log(req.body.email)
       if (!checkAddress) {
-        req.body.userId = req.user._id;
-        
-        req.body.email = req.user.email;
-        console.log(req.body)
         let data = new addressModel(req.body);
         let savea = await data.save();
         success(res, "Address saved Successfuly", 200, savea);
