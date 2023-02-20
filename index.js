@@ -19,9 +19,13 @@ const learningAtFingertipsRoute = require("./src/learningAtFingertips/learningAt
 const addTocartRoute = require("./src/addToCart/addToCartRoute/addToCartRoute");
 const courseDetailRoute=require('./src/courseDetail/courseDetailRoute/courseDetailRoute')
 const addressRoute=require('./src/Address/addressRoute/addressRoute')
+const placeOrderRoute=require('./src/placeOrder/placeOrderRoute/placeOrderRoute')
+const offerRoute=require('./src/offer/offerRoute/offerRoute')
+const searchingRoute=require('./src/searching/searchingRoute/searchingRoute')
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 app.use(registerRoute);
 app.use(loginRoute);
 app.use(forgotPassRoute);
@@ -32,6 +36,9 @@ app.use(addTocartRoute);
 app.use(learningAtFingertipsRoute);
 app.use(courseDetailRoute)
 app.use(addressRoute)
+app.use(placeOrderRoute)
+app.use(offerRoute)
+app.use(searchingRoute)
 app.listen(port, (err) => {
   if (!err) {
     console.log("connected to server on the port number " + port);

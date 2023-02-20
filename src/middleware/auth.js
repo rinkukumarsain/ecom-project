@@ -3,6 +3,7 @@ let jwt=require('jsonwebtoken')
 module.exports =  model=> async(req,res,next) =>{
 
     try{
+        console.log("hierhfjk")
         if (req.headers['authorization']) {
         const token = req.headers['authorization'].split(" ").pop()
         const {_id}=jwt.verify(token,process.env.SECRATE_KEY)
