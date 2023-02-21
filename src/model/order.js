@@ -5,7 +5,7 @@ const orderSchema=mongoose.Schema({
     userId:{
         type:mongoose.Schema.Types.ObjectId
     },
-    productId:{
+    product:{
         type:Array
     },
     addressId:{
@@ -14,26 +14,18 @@ const orderSchema=mongoose.Schema({
     total:{
         type:Number
     },
-    paymentStatus:{
-        type:String
-    },
-    paymentId:{
-
-        type:String
-    },
     orderId:{
         type:String
     },
     orderStatus:{
         type:String
     },
-    razorpaySignature:{
-        type:String
-    },
     orderDate:{
         type:Date
+    },
+    coupon:{
+        type:String
     }
 })
-
 const orderModel=new mongoose.model('order',orderSchema)
 module.exports=orderModel

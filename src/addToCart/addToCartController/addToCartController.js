@@ -3,7 +3,6 @@ let productModel = require("../../model/product");
 const { Aggregate, mongo, default: mongoose } = require("mongoose");
 const { success, error } = require("../../responseApi/responseApi");
 let addToCart = async (req, res) => {
-
   try{
     let findData = await productModel.findOne({ _id: req.body.itemId });
     let check = await cartModel.findOne({
@@ -28,6 +27,7 @@ let addToCart = async (req, res) => {
     }
 
   }catch(e){
+    console.log(e)
     error(res, e, 400);
   }
 

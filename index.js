@@ -25,7 +25,6 @@ const searchingRoute=require('./src/searching/searchingRoute/searchingRoute')
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 app.use(registerRoute);
 app.use(loginRoute);
 app.use(forgotPassRoute);
