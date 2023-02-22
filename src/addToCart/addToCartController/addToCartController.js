@@ -168,6 +168,7 @@ let removeItemFromCart = async (req, res) => {
 };
 let updateItemFromCart = async (req, res) => {
 
+  console.log(req.user._id)
   try{
 
     let find = await cartModel.findOne({
@@ -175,6 +176,7 @@ let updateItemFromCart = async (req, res) => {
       userId: req.user._id,
     });
   
+    
     let updateItem = await cartModel.findByIdAndUpdate(
       { _id: find._id },
       { quantity: req.body.quantity },
@@ -238,6 +240,7 @@ let updateItemFromCart = async (req, res) => {
 
   }catch(err)
   {
+    console.log(err)
     error(res,err,400)
   }
 };

@@ -42,9 +42,10 @@ exports.payOrder = async (req, res) => {
       },
     ];
     let aggression = await cart.aggregate(pipe);
-    console.log(aggression)
-    if(aggression[0]){
+    console.log(aggression);
+    if (aggression[0]) {
       let address = await addressCollection.findOne({ userId: req.user._id });
+      let order=Math.round(Math.random()*10000000000)
       const orderData = await orderModel({
         userId: req.user._id,
         product: aggression.map((item) => {
@@ -52,17 +53,16 @@ exports.payOrder = async (req, res) => {
         }),
         addressId: address,
         total: req.body.finalprice,
-        orderId: req.body.orderId,
+        orderId: order,
         orderDate: Date.now(),
-        coupon:req.body.coupon
+        coupon: req.body.coupon,
       });
       let savedata = await orderData.save();
       let del = await cart.deleteMany({ userId: req.user._id });
       success(res, "Order Succssefuly", 200, savedata);
-    }else{
-      error(res,"No product found to order",400)
+    } else {
+      error(res, "No product found to order", 400);
     }
-
   } catch (err) {
     console.log(err);
     error(res, err, 400);

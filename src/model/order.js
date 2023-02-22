@@ -25,6 +25,10 @@ const orderSchema=mongoose.Schema({
     },
     coupon:{
         type:String
+    },
+    paymentStatus:{
+        type:String,
+        default:"pending"
     }
 })
 const orderModel=new mongoose.model('order',orderSchema)
