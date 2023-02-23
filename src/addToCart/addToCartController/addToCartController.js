@@ -27,7 +27,7 @@ let addToCart = async (req, res) => {
     }
 
   }catch(e){
-    console.log(e)
+   
     error(res, e, 400);
   }
 
@@ -168,7 +168,7 @@ let removeItemFromCart = async (req, res) => {
 };
 let updateItemFromCart = async (req, res) => {
 
-  console.log(req.user._id)
+  
   try{
 
     let find = await cartModel.findOne({
@@ -240,7 +240,6 @@ let updateItemFromCart = async (req, res) => {
 
   }catch(err)
   {
-    console.log(err)
     error(res,err,400)
   }
 };
